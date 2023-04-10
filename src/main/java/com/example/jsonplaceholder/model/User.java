@@ -2,23 +2,27 @@ package com.example.jsonplaceholder.model;
 
 import com.example.jsonplaceholder.model.util.Address;
 import com.example.jsonplaceholder.model.util.Company;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String username;
     private String email;
-    private Address address;
     private String phone;
     private String website;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Company company;
 
     public User() {
