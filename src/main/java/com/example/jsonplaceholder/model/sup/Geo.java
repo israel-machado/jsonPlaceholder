@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.model.util;
+package com.example.jsonplaceholder.model.sup;
 
 public class Geo {
 

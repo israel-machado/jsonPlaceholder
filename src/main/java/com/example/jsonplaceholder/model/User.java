@@ -1,7 +1,7 @@
 package com.example.jsonplaceholder.model;
 
-import com.example.jsonplaceholder.model.util.Address;
-import com.example.jsonplaceholder.model.util.Company;
+import com.example.jsonplaceholder.model.sup.Address;
+import com.example.jsonplaceholder.model.sup.Company;
 import jakarta.persistence.*;
 
 import java.util.Objects;

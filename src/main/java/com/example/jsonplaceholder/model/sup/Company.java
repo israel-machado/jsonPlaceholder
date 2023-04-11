@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.model.util;
+package com.example.jsonplaceholder.model.sup;
 
 import com.example.jsonplaceholder.model.User;
 import jakarta.persistence.*;
