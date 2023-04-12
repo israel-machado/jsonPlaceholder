@@ -3,18 +3,20 @@ package com.example.jsonplaceholder.model.sup;
 import com.example.jsonplaceholder.model.User;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "company")
-public class Company {
+public class Company implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String catchPhrase;
     private String bs;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL)
     private User user;
 
     public Company() {
@@ -27,12 +29,12 @@ public class Company {
         this.bs = bs;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

@@ -3,42 +3,45 @@ package com.example.jsonplaceholder.model.sup;
 import com.example.jsonplaceholder.model.User;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
-@Table(name = "address")
-public class Address {
+@Table(name = "addresses")
+public class Address implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String street;
     private String suite;
     private String city;
     private String zipcode;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
     private User user;
 
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "geo_id", referencedColumnName = "id")
     private Geo geo;
 
     public Address() {
     }
 
-    public Address(Long id, String street, String suite, String city, String zipcode, Geo geo) {
-        this.id = id;
+    public Address(String street, String suite, String city, String zipcode, Geo geo) {
         this.street = street;
         this.suite = suite;
         this.city = city;
         this.zipcode = zipcode;
         this.geo = geo;
-    }
-
-    public Long getId() {
-        return id;
+        this.user = geo.getAddress().getUser();
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getStreet() {
