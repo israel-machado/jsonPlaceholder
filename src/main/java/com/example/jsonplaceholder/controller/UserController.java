@@ -33,16 +33,14 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> insert(@RequestBody UserRequest userRequest){
-        User user = new User(userRequest);
-        user = service.insert(user);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(new UserResponse(user));
+        UserResponse userResponse = service.insert(userRequest);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userResponse.getId()).toUri();
+        return ResponseEntity.created(uri).body(userResponse);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody UserRequest userRequest) {
-       User user = new User(userRequest);
-       UserResponse userResponse = new UserResponse(service.update(id, user));
+       UserResponse userResponse = service.update(id, userRequest);
        return ResponseEntity.ok().body(userResponse);
     }
 
