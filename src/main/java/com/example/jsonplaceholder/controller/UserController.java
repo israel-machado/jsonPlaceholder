@@ -3,8 +3,11 @@ package com.example.jsonplaceholder.controller;
 import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,28 +18,33 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public List<User> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> list = service.findAll();
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return service.getById(id);
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(user);
     }
-
+    //TODO UserResponse, UserRequest
     @PostMapping
-    public User create(@RequestBody User user) {
-        return service.save(user);
+    public ResponseEntity<User> insert(@RequestBody User user){
+        user = service.insert(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
-        return service.save(user);
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+        User updatedUser = service.update(id, user);
+        return ResponseEntity.ok().body(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

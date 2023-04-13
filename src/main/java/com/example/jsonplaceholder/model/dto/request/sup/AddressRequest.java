@@ -1,33 +1,22 @@
-package com.example.jsonplaceholder.model.sup;
+package com.example.jsonplaceholder.model.dto.request.sup;
 
 import com.example.jsonplaceholder.model.User;
-import jakarta.persistence.*;
+import com.example.jsonplaceholder.model.sup.Geo;
 
-import java.io.Serializable;
+public class AddressRequest {
 
-@Entity
-@Table(name = "addresses")
-public class Address implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String street;
     private String suite;
     private String city;
     private String zipcode;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
-    private User user;
-
-    @OneToOne
-    @JoinColumn(name = "geo_id", referencedColumnName = "id")
     private Geo geo;
 
-    public Address() {
+    public AddressRequest() {
     }
 
-    public Address(String street, String suite, String city, String zipcode, Geo geo) {
+    public AddressRequest(String street, String suite, String city, String zipcode, Geo geo) {
         this.street = street;
         this.suite = suite;
         this.city = city;
@@ -35,12 +24,12 @@ public class Address implements Serializable {
         this.geo = geo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getStreet() {
@@ -73,14 +62,6 @@ public class Address implements Serializable {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Geo getGeo() {

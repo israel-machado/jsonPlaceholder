@@ -1,17 +1,12 @@
-package com.example.jsonplaceholder.model;
+package com.example.jsonplaceholder.model.dto.request;
 
-import com.example.jsonplaceholder.model.sup.Address;
-import com.example.jsonplaceholder.model.sup.Company;
-import jakarta.persistence.*;
+import com.example.jsonplaceholder.model.dto.request.sup.AddressRequest;
+import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
+import com.example.jsonplaceholder.model.dto.response.sup.AddressResponse;
+import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
 
-import java.io.Serializable;
+public class UserRequest {
 
-@Entity
-@Table(name = "users")
-public class User implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String username;
@@ -19,26 +14,21 @@ public class User implements Serializable {
     private String phone;
     private String website;
 
-    @OneToOne
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
+    private AddressRequest addressRequest;
+    private CompanyRequest companyRequest;
 
-    @OneToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private Company company;
-
-    public User() {
+    public UserRequest() {
     }
 
-    public User(Long id, String name, String username, String email, String phone, String website, Address address, Company company) {
+    public UserRequest(Long id, String name, String username, String email, String phone, String website, AddressRequest addressRequest, CompanyRequest companyRequest) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.phone = phone;
         this.website = website;
-        this.address = address;
-        this.company = company;
+        this.addressRequest = addressRequest;
+        this.companyRequest = companyRequest;
     }
 
     public Long getId() {
@@ -89,19 +79,19 @@ public class User implements Serializable {
         this.website = website;
     }
 
-    public Address getAddress() {
-        return address;
+    public AddressRequest getAddressRequest() {
+        return addressRequest;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressRequest(AddressRequest addressRequest) {
+        this.addressRequest = addressRequest;
     }
 
-    public Company getCompany() {
-        return company;
+    public CompanyRequest getCompanyRequest() {
+        return companyRequest;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyRequest(CompanyRequest companyRequest) {
+        this.companyRequest = companyRequest;
     }
 }

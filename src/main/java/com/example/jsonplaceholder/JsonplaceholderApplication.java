@@ -9,5 +9,4 @@ public class JsonplaceholderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JsonplaceholderApplication.class, args);
 	}
-
 }
