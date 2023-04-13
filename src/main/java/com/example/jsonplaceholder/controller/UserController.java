@@ -5,6 +5,8 @@ import com.example.jsonplaceholder.model.dto.request.UserRequest;
 import com.example.jsonplaceholder.model.dto.response.UserResponse;
 import com.example.jsonplaceholder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,10 +34,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> insert(@RequestBody UserRequest userRequest){
+    public ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest){
         UserResponse userResponse = service.insert(userRequest);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userResponse.getId()).toUri();
-        return ResponseEntity.created(uri).body(userResponse);
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
