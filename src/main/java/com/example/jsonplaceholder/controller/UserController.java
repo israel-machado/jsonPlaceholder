@@ -1,6 +1,8 @@
 package com.example.jsonplaceholder.controller;
 
 import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.dto.request.UserRequest;
+import com.example.jsonplaceholder.model.dto.response.UserResponse;
 import com.example.jsonplaceholder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +30,20 @@ public class UserController {
         User user = service.findById(id);
         return ResponseEntity.ok().body(user);
     }
-    //TODO UserResponse, UserRequest
+
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User user){
+    public ResponseEntity<UserResponse> insert(@RequestBody UserRequest userRequest){
+        User user = new User(userRequest);
         user = service.insert(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(user);
+        return ResponseEntity.created(uri).body(new UserResponse(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
-        User updatedUser = service.update(id, user);
-        return ResponseEntity.ok().body(updatedUser);
+    public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody UserRequest userRequest) {
+       User user = new User(userRequest);
+       UserResponse userResponse = new UserResponse(service.update(id, user));
+       return ResponseEntity.ok().body(userResponse);
     }
 
     @DeleteMapping("/{id}")

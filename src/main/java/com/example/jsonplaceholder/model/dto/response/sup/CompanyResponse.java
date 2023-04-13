@@ -1,6 +1,7 @@
 package com.example.jsonplaceholder.model.dto.response.sup;
 
 import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.sup.Company;
 
 public class CompanyResponse {
 
@@ -17,6 +18,9 @@ public class CompanyResponse {
         this.name = name;
         this.catchPhrase = catchPhrase;
         this.bs = bs;
+    }
+
+    public CompanyResponse(Company company) {
     }
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package com.example.jsonplaceholder.model;
 
+import com.example.jsonplaceholder.model.dto.request.UserRequest;
 import com.example.jsonplaceholder.model.sup.Address;
 import com.example.jsonplaceholder.model.sup.Company;
 import jakarta.persistence.*;
@@ -39,6 +40,21 @@ public class User implements Serializable {
         this.website = website;
         this.address = address;
         this.company = company;
+    }
+
+    public User(UserRequest userRequest) {
+        this.id = userRequest.getId();
+        this.name = userRequest.getName();
+        this.username = userRequest.getUsername();
+        this.email = userRequest.getEmail();
+        this.phone = userRequest.getPhone();
+        this.website = userRequest.getWebsite();
+        if (userRequest.getAddressRequest() != null) {
+            this.address =  new Address(userRequest.getAddressRequest());
+        }
+        if (userRequest.getCompanyRequest() != null) {
+            this.company = new Company(userRequest.getCompanyRequest());
+        }
     }
 
     public Long getId() {

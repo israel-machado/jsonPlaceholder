@@ -1,6 +1,7 @@
 package com.example.jsonplaceholder.model.sup;
 
 import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -27,6 +28,9 @@ public class Company implements Serializable {
         this.name = name;
         this.catchPhrase = catchPhrase;
         this.bs = bs;
+    }
+
+    public Company(CompanyRequest companyRequest) {
     }
 
     public void setId(Long id) {

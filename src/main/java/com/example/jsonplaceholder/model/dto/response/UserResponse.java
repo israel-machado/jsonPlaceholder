@@ -1,5 +1,6 @@
 package com.example.jsonplaceholder.model.dto.response;
 
+import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.model.dto.response.sup.AddressResponse;
 import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
 
@@ -27,6 +28,17 @@ public class UserResponse {
         this.website = website;
         this.addressResponse = addressResponse;
         this.companyResponse = companyResponse;
+    }
+
+    public UserResponse(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.website = user.getWebsite();
+        this.addressResponse = new AddressResponse(user.getAddress());
+        this.companyResponse = new CompanyResponse(user.getCompany());
     }
 
     public Long getId() {

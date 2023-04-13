@@ -1,6 +1,7 @@
 package com.example.jsonplaceholder.model.dto.response.sup;
 
 import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.sup.Address;
 import com.example.jsonplaceholder.model.sup.Geo;
 
 public class AddressResponse {
@@ -22,6 +23,9 @@ public class AddressResponse {
         this.city = city;
         this.zipcode = zipcode;
         this.geo = geo;
+    }
+
+    public AddressResponse(Address address) {
     }
 
     public Long getId() {

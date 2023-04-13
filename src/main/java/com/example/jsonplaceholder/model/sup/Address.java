@@ -1,6 +1,7 @@
 package com.example.jsonplaceholder.model.sup;
 
 import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.dto.request.sup.AddressRequest;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -33,6 +34,9 @@ public class Address implements Serializable {
         this.city = city;
         this.zipcode = zipcode;
         this.geo = geo;
+    }
+
+    public Address(AddressRequest addressRequest) {
     }
 
     public void setId(Long id) {
