@@ -41,7 +41,7 @@ public class UserConverter {
     }
 
     public static UserResponse convertToUserResponse(User user) {
-        UserResponse userResponse = UserResponse.builder()
+        return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .username(user.getUsername())
@@ -63,14 +63,11 @@ public class UserConverter {
                         .catchPhrase(user.getCompany().getCatchPhrase())
                         .build())
                 .build();
-
-        return userResponse;
     }
 
     public static List<UserResponse> generateUserResponseList(List<User> userList) {
-        List<UserResponse> userResponseList = userList.stream()
+        return userList.stream()
                 .map(UserConverter::convertToUserResponse)
                 .collect(Collectors.toList());
-        return userResponseList;
     }
 }

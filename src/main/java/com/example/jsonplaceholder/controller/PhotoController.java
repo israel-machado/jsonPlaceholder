@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Photos")
+@RequestMapping("/photos")
 public class PhotoController {
 
     @Autowired
@@ -19,26 +19,22 @@ public class PhotoController {
 
     @GetMapping
     public ResponseEntity<List<PhotoResponse>> findAll() {
-        List<PhotoResponse> PhotoResponseList = service.findAll();
-        return ResponseEntity.ok().body(PhotoResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PhotoResponse> findById(@PathVariable Long id) {
-        PhotoResponse PhotoResponse = service.findById(id);
-        return ResponseEntity.ok().body(PhotoResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
-    @PhotoMapping
-    public ResponseEntity<PhotoResponse> create(@RequestBody PhotoRequest PhotoRequest){
-        PhotoResponse PhotoResponse = service.insert(PhotoRequest);
-        return new ResponseEntity<>(PhotoResponse, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<PhotoResponse> create(@RequestBody PhotoRequest photoRequest){
+        return new ResponseEntity<>(service.insert(photoRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PhotoResponse> update(@PathVariable Long id, @RequestBody PhotoRequest PhotoRequest) {
-       PhotoResponse PhotoResponse = service.update(id, PhotoRequest);
-       return ResponseEntity.ok().body(PhotoResponse);
+    public ResponseEntity<PhotoResponse> update(@PathVariable Long id, @RequestBody PhotoRequest photoRequest) {
+       return ResponseEntity.ok().body(service.update(id, photoRequest));
     }
 
     @DeleteMapping("/{id}")

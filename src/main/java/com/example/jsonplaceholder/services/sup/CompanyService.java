@@ -1,17 +1,17 @@
 package com.example.jsonplaceholder.services.sup;
 
-import com.example.jsonplaceholder.converters.CompanyConverter;
-import com.example.jsonplaceholder.model.Company;
-import com.example.jsonplaceholder.model.dto.request.CompanyRequest;
-import com.example.jsonplaceholder.model.dto.response.CompanyResponse;
-import com.example.jsonplaceholder.repository.CompanyRepository;
+import com.example.jsonplaceholder.converters.sup.CompanyConverter;
+import com.example.jsonplaceholder.model.sup.Company;
+import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
+import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
+import com.example.jsonplaceholder.repository.sup.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.jsonplaceholder.converters.CompanyConverter.*;
+import static com.example.jsonplaceholder.converters.sup.CompanyConverter.*;
 
 @Service
 public class CompanyService {
@@ -25,21 +25,21 @@ public class CompanyService {
     }
 
     public CompanyResponse findById(Long id) {
-        Optional<Company> Company = repository.findById(id);
-        return Company.map(CompanyConverter::convertToCompanyResponse).orElse(null);
+        Optional<Company> company = repository.findById(id);
+        return company.map(CompanyConverter::convertToCompanyResponse).orElse(null);
     }
 
-    public CompanyResponse insert(CompanyRequest CompanyRequest) {
-        Company Company = convertToCompany(CompanyRequest);
-        Company = repository.save(Company);
-        return convertToCompanyResponse(Company);
+    public CompanyResponse insert(CompanyRequest companyRequest) {
+        Company company = convertToCompany(companyRequest);
+        company = repository.save(company);
+        return convertToCompanyResponse(company);
     }
 
-    public CompanyResponse update(Long id, CompanyRequest CompanyRequest) {
-        Company Company = convertToCompany(CompanyRequest);
-        Company.setId(id);
-        Company updatedCompany = repository.save(Company);
-        return convertToCompanyResponse(Company);
+    public CompanyResponse update(Long id, CompanyRequest companyRequest) {
+        Company company = convertToCompany(companyRequest);
+        company.setId(id);
+        Company updatedCompany = repository.save(company);
+        return convertToCompanyResponse(updatedCompany);
     }
 
     public void delete(Long id) {

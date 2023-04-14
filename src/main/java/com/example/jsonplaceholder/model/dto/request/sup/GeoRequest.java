@@ -1,6 +1,5 @@
 package com.example.jsonplaceholder.model.dto.request.sup;
 
-import com.example.jsonplaceholder.model.sup.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -19,26 +19,22 @@ public class AlbumController {
 
     @GetMapping
     public ResponseEntity<List<AlbumResponse>> findAll() {
-        List<AlbumResponse> AlbumResponseList = service.findAll();
-        return ResponseEntity.ok().body(AlbumResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AlbumResponse> findById(@PathVariable Long id) {
-        AlbumResponse AlbumResponse = service.findById(id);
-        return ResponseEntity.ok().body(AlbumResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
-    @AlbumMapping
-    public ResponseEntity<AlbumResponse> create(@RequestBody AlbumRequest AlbumRequest){
-        AlbumResponse AlbumResponse = service.insert(AlbumRequest);
-        return new ResponseEntity<>(AlbumResponse, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<AlbumResponse> create(@RequestBody AlbumRequest albumRequest){
+        return new ResponseEntity<>(service.insert(albumRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlbumResponse> update(@PathVariable Long id, @RequestBody AlbumRequest AlbumRequest) {
-       AlbumResponse AlbumResponse = service.update(id, AlbumRequest);
-       return ResponseEntity.ok().body(AlbumResponse);
+    public ResponseEntity<AlbumResponse> update(@PathVariable Long id, @RequestBody AlbumRequest albumRequest) {
+       return ResponseEntity.ok().body(service.update(id, albumRequest));
     }
 
     @DeleteMapping("/{id}")

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Posts")
+@RequestMapping("/posts")
 public class PostController {
 
     @Autowired
@@ -19,26 +19,22 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> findAll() {
-        List<PostResponse> PostResponseList = service.findAll();
-        return ResponseEntity.ok().body(PostResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> findById(@PathVariable Long id) {
-        PostResponse PostResponse = service.findById(id);
-        return ResponseEntity.ok().body(PostResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> create(@RequestBody PostRequest PostRequest){
-        PostResponse PostResponse = service.insert(PostRequest);
-        return new ResponseEntity<>(PostResponse, HttpStatus.CREATED);
+    public ResponseEntity<PostResponse> create(@RequestBody PostRequest postRequest){
+        return new ResponseEntity<>(service.insert(postRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponse> update(@PathVariable Long id, @RequestBody PostRequest PostRequest) {
-       PostResponse PostResponse = service.update(id, PostRequest);
-       return ResponseEntity.ok().body(PostResponse);
+    public ResponseEntity<PostResponse> update(@PathVariable Long id, @RequestBody PostRequest postRequest) {
+       return ResponseEntity.ok().body(service.update(id, postRequest));
     }
 
     @DeleteMapping("/{id}")

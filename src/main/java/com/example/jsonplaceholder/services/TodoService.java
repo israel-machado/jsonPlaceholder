@@ -20,26 +20,26 @@ public class TodoService {
     private TodoRepository repository;
 
     public List<TodoResponse> findAll() {
-        List<Todo> TodoList = repository.findAll();
-        return generateTodoResponseList(TodoList);
+        List<Todo> todoList = repository.findAll();
+        return generateTodoResponseList(todoList);
     }
 
     public TodoResponse findById(Long id) {
-        Optional<Todo> Todo = repository.findById(id);
-        return Todo.map(TodoConverter::convertToTodoResponse).orElse(null);
+        Optional<Todo> todo = repository.findById(id);
+        return todo.map(TodoConverter::convertToTodoResponse).orElse(null);
     }
 
-    public TodoResponse insert(TodoRequest TodoRequest) {
-        Todo Todo = convertToTodo(TodoRequest);
-        Todo = repository.save(Todo);
-        return convertToTodoResponse(Todo);
+    public TodoResponse insert(TodoRequest todoRequest) {
+        Todo todo = convertToTodo(todoRequest);
+        todo = repository.save(todo);
+        return convertToTodoResponse(todo);
     }
 
-    public TodoResponse update(Long id, TodoRequest TodoRequest) {
-        Todo Todo = convertToTodo(TodoRequest);
-        Todo.setId(id);
-        Todo updatedTodo = repository.save(Todo);
-        return convertToTodoResponse(Todo);
+    public TodoResponse update(Long id, TodoRequest todoRequest) {
+        Todo todo = convertToTodo(todoRequest);
+        todo.setId(id);
+        Todo updatedTodo = repository.save(todo);
+        return convertToTodoResponse(updatedTodo);
     }
 
     public void delete(Long id) {

@@ -20,26 +20,26 @@ public class CommentService {
     private CommentRepository repository;
 
     public List<CommentResponse> findAll() {
-        List<Comment> CommentList = repository.findAll();
-        return generateCommentResponseList(CommentList);
+        List<Comment> commentList = repository.findAll();
+        return generateCommentResponseList(commentList);
     }
 
     public CommentResponse findById(Long id) {
-        Optional<Comment> Comment = repository.findById(id);
-        return Comment.map(CommentConverter::convertToCommentResponse).orElse(null);
+        Optional<Comment> comment = repository.findById(id);
+        return comment.map(CommentConverter::convertToCommentResponse).orElse(null);
     }
 
-    public CommentResponse insert(CommentRequest CommentRequest) {
-        Comment Comment = convertToComment(CommentRequest);
-        Comment = repository.save(Comment);
-        return convertToCommentResponse(Comment);
+    public CommentResponse insert(CommentRequest commentRequest) {
+        Comment comment = convertToComment(commentRequest);
+        comment = repository.save(comment);
+        return convertToCommentResponse(comment);
     }
 
-    public CommentResponse update(Long id, CommentRequest CommentRequest) {
-        Comment Comment = convertToComment(CommentRequest);
-        Comment.setId(id);
-        Comment updatedComment = repository.save(Comment);
-        return convertToCommentResponse(Comment);
+    public CommentResponse update(Long id, CommentRequest commentRequest) {
+        Comment comment = convertToComment(commentRequest);
+        comment.setId(id);
+        Comment updatedComment = repository.save(comment);
+        return convertToCommentResponse(updatedComment);
     }
 
     public void delete(Long id) {

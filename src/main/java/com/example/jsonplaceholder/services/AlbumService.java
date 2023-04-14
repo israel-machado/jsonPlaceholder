@@ -20,26 +20,26 @@ public class AlbumService {
     private AlbumRepository repository;
 
     public List<AlbumResponse> findAll() {
-        List<Album> AlbumList = repository.findAll();
-        return generateAlbumResponseList(AlbumList);
+        List<Album> albumList = repository.findAll();
+        return generateAlbumResponseList(albumList);
     }
 
     public AlbumResponse findById(Long id) {
-        Optional<Album> Album = repository.findById(id);
-        return Album.map(AlbumConverter::convertToAlbumResponse).orElse(null);
+        Optional<Album> album = repository.findById(id);
+        return album.map(AlbumConverter::convertToAlbumResponse).orElse(null);
     }
 
-    public AlbumResponse insert(AlbumRequest AlbumRequest) {
-        Album Album = convertToAlbum(AlbumRequest);
-        Album = repository.save(Album);
-        return convertToAlbumResponse(Album);
+    public AlbumResponse insert(AlbumRequest albumRequest) {
+        Album album = convertToAlbum(albumRequest);
+        album = repository.save(album);
+        return convertToAlbumResponse(album);
     }
 
-    public AlbumResponse update(Long id, AlbumRequest AlbumRequest) {
-        Album Album = convertToAlbum(AlbumRequest);
-        Album.setId(id);
-        Album updatedAlbum = repository.save(Album);
-        return convertToAlbumResponse(Album);
+    public AlbumResponse update(Long id, AlbumRequest albumRequest) {
+        Album album = convertToAlbum(albumRequest);
+        album.setId(id);
+        Album updatedAlbum = repository.save(album);
+        return convertToAlbumResponse(updatedAlbum);
     }
 
     public void delete(Long id) {

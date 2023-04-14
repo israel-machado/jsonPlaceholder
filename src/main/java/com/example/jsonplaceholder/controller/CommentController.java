@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Comments")
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
@@ -19,26 +19,22 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<List<CommentResponse>> findAll() {
-        List<CommentResponse> CommentResponseList = service.findAll();
-        return ResponseEntity.ok().body(CommentResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CommentResponse> findById(@PathVariable Long id) {
-        CommentResponse CommentResponse = service.findById(id);
-        return ResponseEntity.ok().body(CommentResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
-    @CommentMapping
-    public ResponseEntity<CommentResponse> create(@RequestBody CommentRequest CommentRequest){
-        CommentResponse CommentResponse = service.insert(CommentRequest);
-        return new ResponseEntity<>(CommentResponse, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<CommentResponse> create(@RequestBody CommentRequest commentRequest){
+        return new ResponseEntity<>(service.insert(commentRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentResponse> update(@PathVariable Long id, @RequestBody CommentRequest CommentRequest) {
-       CommentResponse CommentResponse = service.update(id, CommentRequest);
-       return ResponseEntity.ok().body(CommentResponse);
+    public ResponseEntity<CommentResponse> update(@PathVariable Long id, @RequestBody CommentRequest commentRequest) {
+       return ResponseEntity.ok().body(service.update(id, commentRequest));
     }
 
     @DeleteMapping("/{id}")

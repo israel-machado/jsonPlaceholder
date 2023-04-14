@@ -20,26 +20,22 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> findAll() {
-        List<UserResponse> userResponseList = service.findAll();
-        return ResponseEntity.ok().body(userResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
-        UserResponse userResponse = service.findById(id);
-        return ResponseEntity.ok().body(userResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest){
-        UserResponse userResponse = service.insert(userRequest);
-        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(service.insert(userRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody UserRequest userRequest) {
-       UserResponse userResponse = service.update(id, userRequest);
-       return ResponseEntity.ok().body(userResponse);
+       return ResponseEntity.ok().body(service.update(id, userRequest));
     }
 
     @DeleteMapping("/{id}")

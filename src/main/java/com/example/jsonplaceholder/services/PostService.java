@@ -20,26 +20,26 @@ public class PostService {
     private PostRepository repository;
 
     public List<PostResponse> findAll() {
-        List<Post> PostList = repository.findAll();
-        return generatePostResponseList(PostList);
+        List<Post> postList = repository.findAll();
+        return generatePostResponseList(postList);
     }
 
     public PostResponse findById(Long id) {
-        Optional<Post> Post = repository.findById(id);
-        return Post.map(PostConverter::convertToPostResponse).orElse(null);
+        Optional<Post> post = repository.findById(id);
+        return post.map(PostConverter::convertToPostResponse).orElse(null);
     }
 
-    public PostResponse insert(PostRequest PostRequest) {
-        Post Post = convertToPost(PostRequest);
-        Post = repository.save(Post);
-        return convertToPostResponse(Post);
+    public PostResponse insert(PostRequest postRequest) {
+        Post post = convertToPost(postRequest);
+        post = repository.save(post);
+        return convertToPostResponse(post);
     }
 
-    public PostResponse update(Long id, PostRequest PostRequest) {
-        Post Post = convertToPost(PostRequest);
-        Post.setId(id);
-        Post updatedPost = repository.save(Post);
-        return convertToPostResponse(Post);
+    public PostResponse update(Long id, PostRequest postRequest) {
+        Post post = convertToPost(postRequest);
+        post.setId(id);
+        Post updatedPost = repository.save(post);
+        return convertToPostResponse(updatedPost);
     }
 
     public void delete(Long id) {

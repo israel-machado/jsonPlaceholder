@@ -1,8 +1,8 @@
 package com.example.jsonplaceholder.controller.sup;
 
-import com.example.jsonplaceholder.model.dto.request.AddressRequest;
-import com.example.jsonplaceholder.model.dto.response.AddressResponse;
-import com.example.jsonplaceholder.services.AddressService;
+import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
+import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
+import com.example.jsonplaceholder.services.sup.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,34 +11,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Addresss")
+@RequestMapping("/companies")
 public class CompanyController {
 
     @Autowired
-    private AddressService service;
+    private CompanyService service;
 
     @GetMapping
-    public ResponseEntity<List<AddressResponse>> findAll() {
-        List<AddressResponse> AddressResponseList = service.findAll();
-        return ResponseEntity.ok().body(AddressResponseList);
+    public ResponseEntity<List<CompanyResponse>> findAll() {
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AddressResponse> findById(@PathVariable Long id) {
-        AddressResponse AddressResponse = service.findById(id);
-        return ResponseEntity.ok().body(AddressResponse);
+    public ResponseEntity<CompanyResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
-    @AddressMapping
-    public ResponseEntity<AddressResponse> create(@RequestBody AddressRequest AddressRequest){
-        AddressResponse AddressResponse = service.insert(AddressRequest);
-        return new ResponseEntity<>(AddressResponse, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<CompanyResponse> create(@RequestBody CompanyRequest companyRequest){
+        return new ResponseEntity<>(service.insert(companyRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressResponse> update(@PathVariable Long id, @RequestBody AddressRequest AddressRequest) {
-       AddressResponse AddressResponse = service.update(id, AddressRequest);
-       return ResponseEntity.ok().body(AddressResponse);
+    public ResponseEntity<CompanyResponse> update(@PathVariable Long id, @RequestBody CompanyRequest companyRequest) {
+       return ResponseEntity.ok().body(service.update(id, companyRequest));
     }
 
     @DeleteMapping("/{id}")

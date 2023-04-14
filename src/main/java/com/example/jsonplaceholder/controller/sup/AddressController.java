@@ -1,8 +1,8 @@
 package com.example.jsonplaceholder.controller.sup;
 
-import com.example.jsonplaceholder.model.dto.request.AddressRequest;
-import com.example.jsonplaceholder.model.dto.response.AddressResponse;
-import com.example.jsonplaceholder.services.AddressService;
+import com.example.jsonplaceholder.model.dto.request.sup.AddressRequest;
+import com.example.jsonplaceholder.model.dto.response.sup.AddressResponse;
+import com.example.jsonplaceholder.services.sup.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Addresss")
+@RequestMapping("/addresses")
 public class AddressController {
 
     @Autowired
@@ -19,26 +19,22 @@ public class AddressController {
 
     @GetMapping
     public ResponseEntity<List<AddressResponse>> findAll() {
-        List<AddressResponse> AddressResponseList = service.findAll();
-        return ResponseEntity.ok().body(AddressResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AddressResponse> findById(@PathVariable Long id) {
-        AddressResponse AddressResponse = service.findById(id);
-        return ResponseEntity.ok().body(AddressResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
-    @AddressMapping
-    public ResponseEntity<AddressResponse> create(@RequestBody AddressRequest AddressRequest){
-        AddressResponse AddressResponse = service.insert(AddressRequest);
-        return new ResponseEntity<>(AddressResponse, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<AddressResponse> create(@RequestBody AddressRequest addressRequest){
+        return new ResponseEntity<>(service.insert(addressRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressResponse> update(@PathVariable Long id, @RequestBody AddressRequest AddressRequest) {
-       AddressResponse AddressResponse = service.update(id, AddressRequest);
-       return ResponseEntity.ok().body(AddressResponse);
+    public ResponseEntity<AddressResponse> update(@PathVariable Long id, @RequestBody AddressRequest addressRequest) {
+       return ResponseEntity.ok().body(service.update(id, addressRequest));
     }
 
     @DeleteMapping("/{id}")

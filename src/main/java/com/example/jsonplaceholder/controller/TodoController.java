@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Todos")
+@RequestMapping("/todos")
 public class TodoController {
 
     @Autowired
@@ -19,26 +19,22 @@ public class TodoController {
 
     @GetMapping
     public ResponseEntity<List<TodoResponse>> findAll() {
-        List<TodoResponse> TodoResponseList = service.findAll();
-        return ResponseEntity.ok().body(TodoResponseList);
+        return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TodoResponse> findById(@PathVariable Long id) {
-        TodoResponse TodoResponse = service.findById(id);
-        return ResponseEntity.ok().body(TodoResponse);
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<TodoResponse> create(@RequestBody TodoRequest TodoRequest){
-        TodoResponse TodoResponse = service.insert(TodoRequest);
-        return new ResponseEntity<>(TodoResponse, HttpStatus.CREATED);
+    public ResponseEntity<TodoResponse> create(@RequestBody TodoRequest todoRequest){
+        return new ResponseEntity<>(service.insert(todoRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest TodoRequest) {
-       TodoResponse TodoResponse = service.update(id, TodoRequest);
-       return ResponseEntity.ok().body(TodoResponse);
+    public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest todoRequest) {
+       return ResponseEntity.ok().body(service.update(id, todoRequest));
     }
 
     @DeleteMapping("/{id}")

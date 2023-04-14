@@ -20,26 +20,26 @@ public class PhotoService {
     private PhotoRepository repository;
 
     public List<PhotoResponse> findAll() {
-        List<Photo> PhotoList = repository.findAll();
-        return generatePhotoResponseList(PhotoList);
+        List<Photo> photoList = repository.findAll();
+        return generatePhotoResponseList(photoList);
     }
 
     public PhotoResponse findById(Long id) {
-        Optional<Photo> Photo = repository.findById(id);
-        return Photo.map(PhotoConverter::convertToPhotoResponse).orElse(null);
+        Optional<Photo> photo = repository.findById(id);
+        return photo.map(PhotoConverter::convertToPhotoResponse).orElse(null);
     }
 
-    public PhotoResponse insert(PhotoRequest PhotoRequest) {
-        Photo Photo = convertToPhoto(PhotoRequest);
-        Photo = repository.save(Photo);
-        return convertToPhotoResponse(Photo);
+    public PhotoResponse insert(PhotoRequest photoRequest) {
+        Photo photo = convertToPhoto(photoRequest);
+        photo = repository.save(photo);
+        return convertToPhotoResponse(photo);
     }
 
-    public PhotoResponse update(Long id, PhotoRequest PhotoRequest) {
-        Photo Photo = convertToPhoto(PhotoRequest);
-        Photo.setId(id);
-        Photo updatedPhoto = repository.save(Photo);
-        return convertToPhotoResponse(Photo);
+    public PhotoResponse update(Long id, PhotoRequest photoRequest) {
+        Photo photo = convertToPhoto(photoRequest);
+        photo.setId(id);
+        Photo updatedPhoto = repository.save(photo);
+        return convertToPhotoResponse(updatedPhoto);
     }
 
     public void delete(Long id) {
