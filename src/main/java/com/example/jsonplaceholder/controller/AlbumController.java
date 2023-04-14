@@ -42,4 +42,11 @@ public class AlbumController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    //API
+
+    @GetMapping("/albums/save-from-api")
+    public void saveAlbumsFromApi() {
+        service.saveAlbumsFromApi();
+    }
 }

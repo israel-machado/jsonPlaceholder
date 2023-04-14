@@ -42,4 +42,11 @@ public class CommentController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    //API
+
+    @GetMapping("/comments/save-from-api")
+    public void saveCommentsFromApi() {
+        service.saveCommentsFromApi();
+    }
 }

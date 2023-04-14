@@ -42,4 +42,11 @@ public class PhotoController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    //API
+
+    @GetMapping("/photos/save-from-api")
+    public void savePhotosFromApi() {
+        service.savePhotosFromApi();
+    }
 }

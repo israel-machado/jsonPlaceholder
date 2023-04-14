@@ -42,4 +42,11 @@ public class PostController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    //API
+
+    @GetMapping("/posts/save-from-api")
+    public void savePostsFromApi() {
+        service.savePostsFromApi();
+    }
 }

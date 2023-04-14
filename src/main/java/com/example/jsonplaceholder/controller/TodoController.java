@@ -42,4 +42,11 @@ public class TodoController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    //API
+
+    @GetMapping("/todos/save-from-api")
+    public void saveTodosFromApi() {
+        service.saveTodosFromApi();
+    }
 }
