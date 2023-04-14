@@ -1,5 +1,6 @@
 package com.example.jsonplaceholder.services;
 
+import com.example.jsonplaceholder.converters.UserConverter;
 import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.model.dto.request.UserRequest;
 import com.example.jsonplaceholder.model.dto.response.UserResponse;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.jsonplaceholder.converters.UserConverter.convertToUser;
+import static com.example.jsonplaceholder.converters.UserConverter.*;
 
 @Service
 public class UserService {
@@ -18,26 +19,27 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public List<User> findAll() {
-        return repository.findAll();
+    public List<UserResponse> findAll() {
+        List<User> userList = repository.findAll();
+        return generateUserResponseList(userList);
     }
 
-    public User findById(Long id) {
+    public UserResponse findById(Long id) {
         Optional<User> user = repository.findById(id);
-        return user.orElse(null);
+        return user.map(UserConverter::convertToUserResponse).orElse(null);
     }
 
     public UserResponse insert(UserRequest userRequest) {
         User user = convertToUser(userRequest);
         user = repository.save(user);
-        return new UserResponse(user);
+        return convertToUserResponse(user);
     }
 
     public UserResponse update(Long id, UserRequest userRequest) {
         User user = convertToUser(userRequest);
         user.setId(id);
         User updatedUser = repository.save(user);
-        return new UserResponse(updatedUser);
+        return convertToUserResponse(user);
     }
 
     public void delete(Long id) {

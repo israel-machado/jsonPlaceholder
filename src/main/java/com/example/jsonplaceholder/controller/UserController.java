@@ -6,12 +6,9 @@ import com.example.jsonplaceholder.model.dto.response.UserResponse;
 import com.example.jsonplaceholder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,15 +19,15 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<List<UserResponse>> findAll() {
+        List<UserResponse> userResponseList = service.findAll();
+        return ResponseEntity.ok().body(userResponseList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = service.findById(id);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
+        UserResponse userResponse = service.findById(id);
+        return ResponseEntity.ok().body(userResponse);
     }
 
     @PostMapping
