@@ -1,9 +1,12 @@
 package com.example.jsonplaceholder.services;
 
+import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.PhotoConverter;
+import com.example.jsonplaceholder.model.Album;
 import com.example.jsonplaceholder.model.Photo;
 import com.example.jsonplaceholder.model.dto.request.PhotoRequest;
 import com.example.jsonplaceholder.model.dto.response.PhotoResponse;
+import com.example.jsonplaceholder.repository.AlbumRepository;
 import com.example.jsonplaceholder.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ public class PhotoService {
 
     @Autowired
     private PhotoRepository repository;
+
+    private AlbumRepository albumRepository;
+    private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<PhotoResponse> findAll() {
         List<Photo> photoList = repository.findAll();
@@ -44,5 +50,20 @@ public class PhotoService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    //API
+
+    public void savePhotosFromApi() {
+        List<Photo> photos = jsonPlaceholderClient.getPhotos();
+        for (Photo photo : photos) {
+            if (photo != null) {
+                Album album = albumRepository.findById(photo.getAlbumId()).orElse(null);
+                if (album != null) {
+                    photo.setAlbumId(album.getId());
+                }
+                repository.save(photo);
+            }
+        }
     }
 }

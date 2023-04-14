@@ -1,5 +1,6 @@
 package com.example.jsonplaceholder.services.sup;
 
+import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.sup.CompanyConverter;
 import com.example.jsonplaceholder.model.sup.Company;
 import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
@@ -18,6 +19,8 @@ public class CompanyService {
 
     @Autowired
     private CompanyRepository repository;
+
+    private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<CompanyResponse> findAll() {
         List<Company> CompanyList = repository.findAll();

@@ -1,10 +1,13 @@
 package com.example.jsonplaceholder.services;
 
+import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.TodoConverter;
 import com.example.jsonplaceholder.model.Todo;
+import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.model.dto.request.TodoRequest;
 import com.example.jsonplaceholder.model.dto.response.TodoResponse;
 import com.example.jsonplaceholder.repository.TodoRepository;
+import com.example.jsonplaceholder.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,9 @@ public class TodoService {
 
     @Autowired
     private TodoRepository repository;
+
+    private UserRepository userRepository;
+    private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<TodoResponse> findAll() {
         List<Todo> todoList = repository.findAll();
@@ -44,5 +50,18 @@ public class TodoService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    public void saveTodosFromApi() {
+        List<Todo> todos = jsonPlaceholderClient.getTodos();
+        for (Todo todo : todos) {
+            if (todo != null) {
+                User user = userRepository.findById(todo.getUserId()).orElse(null);
+                if (user != null) {
+                    todo.setUserId(user.getId());
+                }
+                repository.save(todo);
+            }
+        }
     }
 }

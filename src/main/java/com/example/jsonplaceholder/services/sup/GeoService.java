@@ -1,5 +1,6 @@
 package com.example.jsonplaceholder.services.sup;
 
+import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.sup.GeoConverter;
 import com.example.jsonplaceholder.model.sup.Geo;
 import com.example.jsonplaceholder.model.dto.request.sup.GeoRequest;
@@ -18,6 +19,8 @@ public class GeoService {
 
     @Autowired
     private GeoRepository repository;
+
+    private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<GeoResponse> findAll() {
         List<Geo> geoList = repository.findAll();

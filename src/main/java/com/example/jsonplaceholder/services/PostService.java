@@ -1,10 +1,13 @@
 package com.example.jsonplaceholder.services;
 
+import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.PostConverter;
 import com.example.jsonplaceholder.model.Post;
+import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.model.dto.request.PostRequest;
 import com.example.jsonplaceholder.model.dto.response.PostResponse;
 import com.example.jsonplaceholder.repository.PostRepository;
+import com.example.jsonplaceholder.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,9 @@ public class PostService {
 
     @Autowired
     private PostRepository repository;
+
+    private UserRepository userRepository;
+    private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<PostResponse> findAll() {
         List<Post> postList = repository.findAll();
@@ -44,5 +50,20 @@ public class PostService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    //API
+
+    public void savePostsFromApi() {
+        List<Post> posts = jsonPlaceholderClient.getPosts();
+        for (Post post : posts) {
+            if (post != null) {
+                User user = userRepository.findById(post.getUserId()).orElse(null);
+                if (user != null) {
+                    post.setUserId(user.getId());
+                }
+                repository.save(post);
+            }
+        }
     }
 }

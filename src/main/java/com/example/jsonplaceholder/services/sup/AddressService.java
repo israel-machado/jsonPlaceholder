@@ -1,9 +1,11 @@
 package com.example.jsonplaceholder.services.sup;
 
+import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.sup.AddressConverter;
 import com.example.jsonplaceholder.model.sup.Address;
 import com.example.jsonplaceholder.model.dto.request.sup.AddressRequest;
 import com.example.jsonplaceholder.model.dto.response.sup.AddressResponse;
+import com.example.jsonplaceholder.model.sup.Geo;
 import com.example.jsonplaceholder.repository.sup.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class AddressService {
 
     @Autowired
     private AddressRepository repository;
+
+    private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<AddressResponse> findAll() {
         List<Address> addressList = repository.findAll();
