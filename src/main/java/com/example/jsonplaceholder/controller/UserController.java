@@ -1,6 +1,5 @@
 package com.example.jsonplaceholder.controller;
 
-import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.model.dto.request.UserRequest;
 import com.example.jsonplaceholder.model.dto.response.UserResponse;
 import com.example.jsonplaceholder.services.UserService;
@@ -46,7 +45,7 @@ public class UserController {
 
     //API
 
-    @GetMapping("/users/save-from-api")
+    @GetMapping("/load")
     public void saveUsersFromApi() {
         service.saveUsersFromApi();
     }

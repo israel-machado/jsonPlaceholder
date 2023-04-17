@@ -1,6 +1,5 @@
 package com.example.jsonplaceholder.model.dto.response;
 
-import com.example.jsonplaceholder.model.User;
 import com.example.jsonplaceholder.model.dto.response.sup.AddressResponse;
 import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
 import lombok.AllArgsConstructor;

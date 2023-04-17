@@ -1,9 +1,10 @@
 package com.example.jsonplaceholder.client;
 
-import com.example.jsonplaceholder.model.*;
-import com.example.jsonplaceholder.model.sup.Address;
-import com.example.jsonplaceholder.model.sup.Company;
-import com.example.jsonplaceholder.model.sup.Geo;
+import com.example.jsonplaceholder.model.placeholder.*;
+import com.example.jsonplaceholder.model.placeholder.user.AddressPlaceholder;
+import com.example.jsonplaceholder.model.placeholder.user.CompanyPlaceholder;
+import com.example.jsonplaceholder.model.placeholder.user.GeoPlaceholder;
+import com.example.jsonplaceholder.model.placeholder.user.UserPlaceholder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,31 +14,29 @@ import java.util.List;
 public interface JsonPlaceholderClient {
 
     @GetMapping("/users")
-    List<User> getUsers();
+    List<UserPlaceholder> getUsers();
 
     @GetMapping("/todos")
-    List<Todo> getTodos();
+    List<TodoPlaceholder> getTodos();
 
     @GetMapping("/posts")
-    List<Post> getPosts();
+    List<PostPlaceholder> getPosts();
 
     @GetMapping("/photos")
-    List<Photo> getPhotos();
+    List<PhotoPlaceholder> getPhotos();
 
     @GetMapping("/comments")
-    List<Comment> getComments();
+    List<CommentPlaceholder> getComments();
 
     @GetMapping("/albums")
-    List<Album> getAlbums();
+    List<AlbumPlaceholder> getAlbums();
 
     @GetMapping("/addresses")
-    List<Address> getAddresses();
+    List<AddressPlaceholder> getAddresses();
 
     @GetMapping("/companies")
-    List<Company> getCompanies();
+    List<CompanyPlaceholder> getCompanies();
 
     @GetMapping("/geos")
-    List<Geo> getGeos();
-
-
+    List<GeoPlaceholder> getGeos();
 }

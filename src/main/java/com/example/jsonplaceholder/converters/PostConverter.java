@@ -2,15 +2,15 @@ package com.example.jsonplaceholder.converters;
 
 import com.example.jsonplaceholder.model.dto.request.PostRequest;
 import com.example.jsonplaceholder.model.dto.response.PostResponse;
-import com.example.jsonplaceholder.model.Post;
+import com.example.jsonplaceholder.model.domain.PostDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PostConverter {
 
-    public static Post convertToPost(PostRequest postRequest) {
-        return Post.builder()
+    public static PostDomain convertToPost(PostRequest postRequest) {
+        return PostDomain.builder()
                 .id(postRequest.getId())
                 .userId(postRequest.getUserId())
                 .body(postRequest.getBody())
@@ -18,7 +18,7 @@ public class PostConverter {
                 .build();
     }
 
-    public static PostResponse convertToPostResponse(Post post) {
+    public static PostResponse convertToPostResponse(PostDomain post) {
         return PostResponse.builder()
                 .id(post.getId())
                 .userId(post.getUserId())
@@ -28,7 +28,7 @@ public class PostConverter {
 
     }
 
-    public static List<PostResponse> generatePostResponseList(List<Post> postList) {
+    public static List<PostResponse> generatePostResponseList(List<PostDomain> postList) {
         return postList.stream()
                 .map(PostConverter::convertToPostResponse)
                 .collect(Collectors.toList());

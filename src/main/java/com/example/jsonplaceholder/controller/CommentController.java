@@ -45,7 +45,7 @@ public class CommentController {
 
     //API
 
-    @GetMapping("/comments/save-from-api")
+    @GetMapping("/save-from-api")
     public void saveCommentsFromApi() {
         service.saveCommentsFromApi();
     }

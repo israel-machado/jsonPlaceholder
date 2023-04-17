@@ -45,7 +45,7 @@ public class AlbumController {
 
     //API
 
-    @GetMapping("/albums/save-from-api")
+    @GetMapping("/save-from-api")
     public void saveAlbumsFromApi() {
         service.saveAlbumsFromApi();
     }

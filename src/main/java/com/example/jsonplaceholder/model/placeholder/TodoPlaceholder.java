@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.model;
+package com.example.jsonplaceholder.model.placeholder;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "todo")
-public class Todo implements Serializable {
+public class TodoPlaceholder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

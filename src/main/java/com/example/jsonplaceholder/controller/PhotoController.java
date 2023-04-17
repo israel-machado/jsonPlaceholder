@@ -45,7 +45,7 @@ public class PhotoController {
 
     //API
 
-    @GetMapping("/photos/save-from-api")
+    @GetMapping("/save-from-api")
     public void savePhotosFromApi() {
         service.savePhotosFromApi();
     }

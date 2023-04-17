@@ -1,22 +1,20 @@
-package com.example.jsonplaceholder.model.dto.request.sup;
+package com.example.jsonplaceholder.model.placeholder.user;
 
-import com.example.jsonplaceholder.model.domain.user.GeoDomain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class AddressRequest {
+@NoArgsConstructor
+@Data
+public class AddressPlaceholder {
 
-    private Long id;
     private String street;
     private String suite;
     private String city;
     private String zipcode;
 
-    private GeoDomain geo;
+    private GeoPlaceholder geo;
 }

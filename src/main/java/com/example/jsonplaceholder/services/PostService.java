@@ -2,8 +2,8 @@ package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.PostConverter;
-import com.example.jsonplaceholder.model.Post;
-import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.domain.PostDomain;
+import com.example.jsonplaceholder.model.domain.user.UserDomain;
 import com.example.jsonplaceholder.model.dto.request.PostRequest;
 import com.example.jsonplaceholder.model.dto.response.PostResponse;
 import com.example.jsonplaceholder.repository.PostRepository;
@@ -26,25 +26,25 @@ public class PostService {
     private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<PostResponse> findAll() {
-        List<Post> postList = repository.findAll();
+        List<PostDomain> postList = repository.findAll();
         return generatePostResponseList(postList);
     }
 
     public PostResponse findById(Long id) {
-        Optional<Post> post = repository.findById(id);
+        Optional<PostDomain> post = repository.findById(id);
         return post.map(PostConverter::convertToPostResponse).orElse(null);
     }
 
     public PostResponse insert(PostRequest postRequest) {
-        Post post = convertToPost(postRequest);
+        PostDomain post = convertToPost(postRequest);
         post = repository.save(post);
         return convertToPostResponse(post);
     }
 
     public PostResponse update(Long id, PostRequest postRequest) {
-        Post post = convertToPost(postRequest);
+        PostDomain post = convertToPost(postRequest);
         post.setId(id);
-        Post updatedPost = repository.save(post);
+        PostDomain updatedPost = repository.save(post);
         return convertToPostResponse(updatedPost);
     }
 
@@ -55,10 +55,10 @@ public class PostService {
     //API
 
     public void savePostsFromApi() {
-        List<Post> posts = jsonPlaceholderClient.getPosts();
-        for (Post post : posts) {
+        List<PostDomain> posts = jsonPlaceholderClient.getPosts();
+        for (PostDomain post : posts) {
             if (post != null) {
-                User user = userRepository.findById(post.getUserId()).orElse(null);
+                UserDomain user = userRepository.findById(post.getUserId()).orElse(null);
                 if (user != null) {
                     post.setUserId(user.getId());
                 }

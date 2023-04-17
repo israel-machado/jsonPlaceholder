@@ -2,8 +2,8 @@ package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.CommentConverter;
-import com.example.jsonplaceholder.model.Comment;
-import com.example.jsonplaceholder.model.Post;
+import com.example.jsonplaceholder.model.domain.CommentDomain;
+import com.example.jsonplaceholder.model.domain.PostDomain;
 import com.example.jsonplaceholder.model.dto.request.CommentRequest;
 import com.example.jsonplaceholder.model.dto.response.CommentResponse;
 import com.example.jsonplaceholder.repository.CommentRepository;
@@ -26,25 +26,25 @@ public class CommentService {
     private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<CommentResponse> findAll() {
-        List<Comment> commentList = repository.findAll();
+        List<CommentDomain> commentList = repository.findAll();
         return generateCommentResponseList(commentList);
     }
 
     public CommentResponse findById(Long id) {
-        Optional<Comment> comment = repository.findById(id);
+        Optional<CommentDomain> comment = repository.findById(id);
         return comment.map(CommentConverter::convertToCommentResponse).orElse(null);
     }
 
     public CommentResponse insert(CommentRequest commentRequest) {
-        Comment comment = convertToComment(commentRequest);
+        CommentDomain comment = convertToComment(commentRequest);
         comment = repository.save(comment);
         return convertToCommentResponse(comment);
     }
 
     public CommentResponse update(Long id, CommentRequest commentRequest) {
-        Comment comment = convertToComment(commentRequest);
+        CommentDomain comment = convertToComment(commentRequest);
         comment.setId(id);
-        Comment updatedComment = repository.save(comment);
+        CommentDomain updatedComment = repository.save(comment);
         return convertToCommentResponse(updatedComment);
     }
 
@@ -55,10 +55,10 @@ public class CommentService {
     //API
 
     public void saveCommentsFromApi() {
-        List<Comment> comments = jsonPlaceholderClient.getComments();
-        for (Comment comment : comments) {
+        List<CommentDomain> comments = jsonPlaceholderClient.getComments();
+        for (CommentDomain comment : comments) {
             if (comment != null) {
-                Post post = postRepository.findById(comment.getPostId()).orElse(null);
+                PostDomain post = postRepository.findById(comment.getPostId()).orElse(null);
                 if (post != null) {
                     comment.setPostId(post.getId());
                 }

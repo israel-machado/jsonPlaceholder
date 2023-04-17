@@ -2,8 +2,8 @@ package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.PhotoConverter;
-import com.example.jsonplaceholder.model.Album;
-import com.example.jsonplaceholder.model.Photo;
+import com.example.jsonplaceholder.model.domain.AlbumDomain;
+import com.example.jsonplaceholder.model.domain.PhotoDomain;
 import com.example.jsonplaceholder.model.dto.request.PhotoRequest;
 import com.example.jsonplaceholder.model.dto.response.PhotoResponse;
 import com.example.jsonplaceholder.repository.AlbumRepository;
@@ -26,25 +26,25 @@ public class PhotoService {
     private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<PhotoResponse> findAll() {
-        List<Photo> photoList = repository.findAll();
+        List<PhotoDomain> photoList = repository.findAll();
         return generatePhotoResponseList(photoList);
     }
 
     public PhotoResponse findById(Long id) {
-        Optional<Photo> photo = repository.findById(id);
+        Optional<PhotoDomain> photo = repository.findById(id);
         return photo.map(PhotoConverter::convertToPhotoResponse).orElse(null);
     }
 
     public PhotoResponse insert(PhotoRequest photoRequest) {
-        Photo photo = convertToPhoto(photoRequest);
+        PhotoDomain photo = convertToPhoto(photoRequest);
         photo = repository.save(photo);
         return convertToPhotoResponse(photo);
     }
 
     public PhotoResponse update(Long id, PhotoRequest photoRequest) {
-        Photo photo = convertToPhoto(photoRequest);
+        PhotoDomain photo = convertToPhoto(photoRequest);
         photo.setId(id);
-        Photo updatedPhoto = repository.save(photo);
+        PhotoDomain updatedPhoto = repository.save(photo);
         return convertToPhotoResponse(updatedPhoto);
     }
 
@@ -55,10 +55,10 @@ public class PhotoService {
     //API
 
     public void savePhotosFromApi() {
-        List<Photo> photos = jsonPlaceholderClient.getPhotos();
-        for (Photo photo : photos) {
+        List<PhotoDomain> photos = jsonPlaceholderClient.getPhotos();
+        for (PhotoDomain photo : photos) {
             if (photo != null) {
-                Album album = albumRepository.findById(photo.getAlbumId()).orElse(null);
+                AlbumDomain album = albumRepository.findById(photo.getAlbumId()).orElse(null);
                 if (album != null) {
                     photo.setAlbumId(album.getId());
                 }

@@ -2,15 +2,15 @@ package com.example.jsonplaceholder.converters;
 
 import com.example.jsonplaceholder.model.dto.request.CommentRequest;
 import com.example.jsonplaceholder.model.dto.response.CommentResponse;
-import com.example.jsonplaceholder.model.Comment;
+import com.example.jsonplaceholder.model.domain.CommentDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CommentConverter {
 
-    public static Comment convertToComment(CommentRequest commentRequest) {
-        return Comment.builder()
+    public static CommentDomain convertToComment(CommentRequest commentRequest) {
+        return CommentDomain.builder()
                 .id(commentRequest.getId())
                 .postId(commentRequest.getPostId())
                 .name(commentRequest.getName())
@@ -19,7 +19,7 @@ public class CommentConverter {
                 .build();
     }
 
-    public static CommentResponse convertToCommentResponse(Comment comment) {
+    public static CommentResponse convertToCommentResponse(CommentDomain comment) {
         return CommentResponse.builder()
                 .id(comment.getId())
                 .postId(comment.getPostId())
@@ -30,7 +30,7 @@ public class CommentConverter {
 
     }
 
-    public static List<CommentResponse> generateCommentResponseList(List<Comment> commentList) {
+    public static List<CommentResponse> generateCommentResponseList(List<CommentDomain> commentList) {
         return commentList.stream()
                 .map(CommentConverter::convertToCommentResponse)
                 .collect(Collectors.toList());

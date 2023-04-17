@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.model.sup;
+package com.example.jsonplaceholder.model.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "geos")
-public class Geo {
+public class GeoDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,6 @@ public class Geo {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    private Address address;
+    private AddressDomain address;
 
 }

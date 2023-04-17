@@ -2,15 +2,15 @@ package com.example.jsonplaceholder.converters.sup;
 
 import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
 import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
-import com.example.jsonplaceholder.model.sup.Company;
+import com.example.jsonplaceholder.model.domain.user.CompanyDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CompanyConverter {
 
-    public static Company convertToCompany(CompanyRequest companyRequest) {
-        return Company.builder()
+    public static CompanyDomain convertToCompany(CompanyRequest companyRequest) {
+        return CompanyDomain.builder()
                 .id(companyRequest.getId())
                 .name(companyRequest.getName())
                 .catchPhrase(companyRequest.getCatchPhrase())
@@ -18,7 +18,7 @@ public class CompanyConverter {
                 .build();
     }
 
-    public static CompanyResponse convertToCompanyResponse(Company company) {
+    public static CompanyResponse convertToCompanyResponse(CompanyDomain company) {
         return CompanyResponse.builder()
                 .id(company.getId())
                 .name(company.getName())
@@ -27,7 +27,7 @@ public class CompanyConverter {
                 .build();
     }
 
-    public static List<CompanyResponse> generateCompanyResponseList(List<Company> companyList) {
+    public static List<CompanyResponse> generateCompanyResponseList(List<CompanyDomain> companyList) {
         return companyList.stream()
                 .map(CompanyConverter::convertToCompanyResponse)
                 .collect(Collectors.toList());

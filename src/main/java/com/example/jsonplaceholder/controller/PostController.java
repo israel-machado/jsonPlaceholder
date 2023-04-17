@@ -45,7 +45,7 @@ public class PostController {
 
     //API
 
-    @GetMapping("/posts/save-from-api")
+    @GetMapping("/save-from-api")
     public void savePostsFromApi() {
         service.savePostsFromApi();
     }

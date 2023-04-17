@@ -1,21 +1,21 @@
 package com.example.jsonplaceholder.converters;
 
-import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.domain.user.UserDomain;
 import com.example.jsonplaceholder.model.dto.request.UserRequest;
 import com.example.jsonplaceholder.model.dto.response.UserResponse;
 import com.example.jsonplaceholder.model.dto.response.sup.AddressResponse;
 import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
-import com.example.jsonplaceholder.model.sup.Address;
-import com.example.jsonplaceholder.model.sup.Company;
+import com.example.jsonplaceholder.model.domain.user.AddressDomain;
+import com.example.jsonplaceholder.model.domain.user.CompanyDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserConverter {
 
-    public static User convertToUser(UserRequest userRequest) {
+    public static UserDomain convertToUser(UserRequest userRequest) {
 
-        return User.builder()
+        return UserDomain.builder()
                 .id(userRequest.getId())
                 .name(userRequest.getName())
                 .username(userRequest.getUsername())
@@ -23,7 +23,7 @@ public class UserConverter {
                 .website(userRequest.getWebsite())
                 .website(userRequest.getWebsite())
                 .email(userRequest.getEmail())
-                .address(Address.builder()
+                .address(AddressDomain.builder()
                         .id(userRequest.getAddressRequest().getId())
                         .city(userRequest.getAddressRequest().getCity())
                         .suite(userRequest.getAddressRequest().getSuite())
@@ -31,7 +31,7 @@ public class UserConverter {
                         .zipcode(userRequest.getAddressRequest().getZipcode())
                         .geo(userRequest.getAddressRequest().getGeo())
                         .build())
-                .company(Company.builder()
+                .company(CompanyDomain.builder()
                         .id(userRequest.getCompanyRequest().getId())
                         .name(userRequest.getCompanyRequest().getName())
                         .bs(userRequest.getCompanyRequest().getBs())
@@ -40,7 +40,7 @@ public class UserConverter {
                 .build();
     }
 
-    public static UserResponse convertToUserResponse(User user) {
+    public static UserResponse convertToUserResponse(UserDomain user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -65,7 +65,7 @@ public class UserConverter {
                 .build();
     }
 
-    public static List<UserResponse> generateUserResponseList(List<User> userList) {
+    public static List<UserResponse> generateUserResponseList(List<UserDomain> userList) {
         return userList.stream()
                 .map(UserConverter::convertToUserResponse)
                 .collect(Collectors.toList());

@@ -1,14 +1,10 @@
-package com.example.jsonplaceholder.model.sup;
+package com.example.jsonplaceholder.model.domain.user;
 
-import com.example.jsonplaceholder.model.User;
-import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Builder
 @AllArgsConstructor
@@ -16,7 +12,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "company")
-public class Company implements Serializable {
+public class CompanyDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +22,6 @@ public class Company implements Serializable {
     private String bs;
 
     @OneToOne(mappedBy = "company", cascade = CascadeType.ALL)
-    private User user;
+    private UserDomain user;
 
 }

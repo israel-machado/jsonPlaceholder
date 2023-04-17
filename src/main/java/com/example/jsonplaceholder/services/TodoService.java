@@ -2,8 +2,8 @@ package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.TodoConverter;
-import com.example.jsonplaceholder.model.Todo;
-import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.domain.TodoDomain;
+import com.example.jsonplaceholder.model.domain.user.UserDomain;
 import com.example.jsonplaceholder.model.dto.request.TodoRequest;
 import com.example.jsonplaceholder.model.dto.response.TodoResponse;
 import com.example.jsonplaceholder.repository.TodoRepository;
@@ -26,25 +26,25 @@ public class TodoService {
     private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<TodoResponse> findAll() {
-        List<Todo> todoList = repository.findAll();
+        List<TodoDomain> todoList = repository.findAll();
         return generateTodoResponseList(todoList);
     }
 
     public TodoResponse findById(Long id) {
-        Optional<Todo> todo = repository.findById(id);
+        Optional<TodoDomain> todo = repository.findById(id);
         return todo.map(TodoConverter::convertToTodoResponse).orElse(null);
     }
 
     public TodoResponse insert(TodoRequest todoRequest) {
-        Todo todo = convertToTodo(todoRequest);
+        TodoDomain todo = convertToTodo(todoRequest);
         todo = repository.save(todo);
         return convertToTodoResponse(todo);
     }
 
     public TodoResponse update(Long id, TodoRequest todoRequest) {
-        Todo todo = convertToTodo(todoRequest);
+        TodoDomain todo = convertToTodo(todoRequest);
         todo.setId(id);
-        Todo updatedTodo = repository.save(todo);
+        TodoDomain updatedTodo = repository.save(todo);
         return convertToTodoResponse(updatedTodo);
     }
 
@@ -53,10 +53,10 @@ public class TodoService {
     }
 
     public void saveTodosFromApi() {
-        List<Todo> todos = jsonPlaceholderClient.getTodos();
-        for (Todo todo : todos) {
+        List<TodoDomain> todos = jsonPlaceholderClient.getTodos();
+        for (TodoDomain todo : todos) {
             if (todo != null) {
-                User user = userRepository.findById(todo.getUserId()).orElse(null);
+                UserDomain user = userRepository.findById(todo.getUserId()).orElse(null);
                 if (user != null) {
                     todo.setUserId(user.getId());
                 }

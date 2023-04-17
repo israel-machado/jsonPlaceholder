@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.model.dto.response.sup;
+package com.example.jsonplaceholder.model.placeholder.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,14 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class GeoResponse {
+@NoArgsConstructor
+@Data
+public class GeoPlaceholder {
 
-    private Long id;
     private String lat;
     private String lng;
-
-    private AddressResponse addressResponse;
 }

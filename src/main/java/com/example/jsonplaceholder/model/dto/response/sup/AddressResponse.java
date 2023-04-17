@@ -1,6 +1,6 @@
 package com.example.jsonplaceholder.model.dto.response.sup;
 
-import com.example.jsonplaceholder.model.sup.Geo;
+import com.example.jsonplaceholder.model.domain.user.GeoDomain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class AddressResponse {
     private String suite;
     private String city;
     private String zipcode;
-    private Geo geo;
+    private GeoDomain geo;
 }

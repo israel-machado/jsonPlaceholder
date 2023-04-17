@@ -2,8 +2,8 @@ package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
 import com.example.jsonplaceholder.converters.AlbumConverter;
-import com.example.jsonplaceholder.model.Album;
-import com.example.jsonplaceholder.model.User;
+import com.example.jsonplaceholder.model.domain.AlbumDomain;
+import com.example.jsonplaceholder.model.domain.user.UserDomain;
 import com.example.jsonplaceholder.model.dto.request.AlbumRequest;
 import com.example.jsonplaceholder.model.dto.response.AlbumResponse;
 import com.example.jsonplaceholder.repository.AlbumRepository;
@@ -27,25 +27,25 @@ public class AlbumService {
     private JsonPlaceholderClient jsonPlaceholderClient;
 
     public List<AlbumResponse> findAll() {
-        List<Album> albumList = repository.findAll();
+        List<AlbumDomain> albumList = repository.findAll();
         return generateAlbumResponseList(albumList);
     }
 
     public AlbumResponse findById(Long id) {
-        Optional<Album> album = repository.findById(id);
+        Optional<AlbumDomain> album = repository.findById(id);
         return album.map(AlbumConverter::convertToAlbumResponse).orElse(null);
     }
 
     public AlbumResponse insert(AlbumRequest albumRequest) {
-        Album album = convertToAlbum(albumRequest);
+        AlbumDomain album = convertToAlbum(albumRequest);
         album = repository.save(album);
         return convertToAlbumResponse(album);
     }
 
     public AlbumResponse update(Long id, AlbumRequest albumRequest) {
-        Album album = convertToAlbum(albumRequest);
+        AlbumDomain album = convertToAlbum(albumRequest);
         album.setId(id);
-        Album updatedAlbum = repository.save(album);
+        AlbumDomain updatedAlbum = repository.save(album);
         return convertToAlbumResponse(updatedAlbum);
     }
 
@@ -56,10 +56,10 @@ public class AlbumService {
     //API
 
     public void saveAlbumsFromApi() {
-        List<Album> albums = jsonPlaceholderClient.getAlbums();
-        for (Album album : albums) {
+        List<AlbumDomain> albums = jsonPlaceholderClient.getAlbums();
+        for (AlbumDomain album : albums) {
             if (album != null) {
-                User user = userRepository.findById(album.getUserId()).orElse(null);
+                UserDomain user = userRepository.findById(album.getUserId()).orElse(null);
                 if (user != null) {
                     album.setUserId(user.getId());
                 }
