@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.converters.sup;
+package com.example.jsonplaceholder.mappers.sup;
 
 import com.example.jsonplaceholder.model.dto.request.sup.CompanyRequest;
 import com.example.jsonplaceholder.model.dto.response.sup.CompanyResponse;
@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class CompanyConverter {
 
+    // Domain
+
     public static CompanyDomain convertToCompany(CompanyRequest companyRequest) {
         return CompanyDomain.builder()
                 .id(companyRequest.getId())
@@ -17,6 +19,8 @@ public class CompanyConverter {
                 .bs(companyRequest.getBs())
                 .build();
     }
+
+    // Response
 
     public static CompanyResponse convertToCompanyResponse(CompanyDomain company) {
         return CompanyResponse.builder()

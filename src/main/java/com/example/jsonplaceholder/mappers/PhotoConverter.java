@@ -1,15 +1,18 @@
-package com.example.jsonplaceholder.converters;
+package com.example.jsonplaceholder.mappers;
 
 import com.example.jsonplaceholder.model.dto.request.PhotoRequest;
 import com.example.jsonplaceholder.model.dto.response.PhotoResponse;
 import com.example.jsonplaceholder.model.domain.PhotoDomain;
+import com.example.jsonplaceholder.model.placeholder.PhotoPlaceholder;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PhotoConverter {
 
-    public static PhotoDomain convertToPhoto(PhotoRequest photoRequest) {
+    // Domain
+
+    public static PhotoDomain convertRequestToDomain(PhotoRequest photoRequest) {
         return PhotoDomain.builder()
                 .id(photoRequest.getId())
                 .albumId(photoRequest.getAlbumId())
@@ -18,6 +21,18 @@ public class PhotoConverter {
                 .title(photoRequest.getTitle())
                 .build();
     }
+
+    public static PhotoDomain convertPlaceholderToDomain(PhotoPlaceholder photoPlaceholder) {
+        return PhotoDomain.builder()
+                .id(photoPlaceholder.getId())
+                .albumId(photoPlaceholder.getAlbumId())
+                .thumbnailUrl(photoPlaceholder.getThumbnailUrl())
+                .url(photoPlaceholder.getUrl())
+                .title(photoPlaceholder.getTitle())
+                .build();
+    }
+
+    // Response
 
     public static PhotoResponse convertToPhotoResponse(PhotoDomain photo) {
         return PhotoResponse.builder()

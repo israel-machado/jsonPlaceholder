@@ -22,10 +22,7 @@ public class AddressDomain {
     private String city;
     private String zipcode;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
-    private UserDomain user;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "geo_id", referencedColumnName = "id")
     private GeoDomain geo;
 

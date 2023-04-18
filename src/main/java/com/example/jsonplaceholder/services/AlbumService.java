@@ -1,11 +1,11 @@
 package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
-import com.example.jsonplaceholder.converters.AlbumConverter;
+import com.example.jsonplaceholder.mappers.AlbumConverter;
 import com.example.jsonplaceholder.model.domain.AlbumDomain;
-import com.example.jsonplaceholder.model.domain.user.UserDomain;
 import com.example.jsonplaceholder.model.dto.request.AlbumRequest;
 import com.example.jsonplaceholder.model.dto.response.AlbumResponse;
+import com.example.jsonplaceholder.model.placeholder.AlbumPlaceholder;
 import com.example.jsonplaceholder.repository.AlbumRepository;
 import com.example.jsonplaceholder.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.jsonplaceholder.converters.AlbumConverter.*;
+import static com.example.jsonplaceholder.mappers.AlbumConverter.*;
 
 @Service
 public class AlbumService {
@@ -37,13 +37,13 @@ public class AlbumService {
     }
 
     public AlbumResponse insert(AlbumRequest albumRequest) {
-        AlbumDomain album = convertToAlbum(albumRequest);
+        AlbumDomain album = convertRequestToDomain(albumRequest);
         album = repository.save(album);
         return convertToAlbumResponse(album);
     }
 
     public AlbumResponse update(Long id, AlbumRequest albumRequest) {
-        AlbumDomain album = convertToAlbum(albumRequest);
+        AlbumDomain album = convertRequestToDomain(albumRequest);
         album.setId(id);
         AlbumDomain updatedAlbum = repository.save(album);
         return convertToAlbumResponse(updatedAlbum);
@@ -56,15 +56,10 @@ public class AlbumService {
     //API
 
     public void saveAlbumsFromApi() {
-        List<AlbumDomain> albums = jsonPlaceholderClient.getAlbums();
-        for (AlbumDomain album : albums) {
-            if (album != null) {
-                UserDomain user = userRepository.findById(album.getUserId()).orElse(null);
-                if (user != null) {
-                    album.setUserId(user.getId());
-                }
-                repository.save(album);
-            }
+        List<AlbumPlaceholder> albumsPlaceholder = jsonPlaceholderClient.getAlbums();
+        for (AlbumPlaceholder album : albumsPlaceholder) {
+            AlbumDomain albumDomain = convertPlaceholderToDomain(album);
+            repository.save(albumDomain);
         }
     }
 }

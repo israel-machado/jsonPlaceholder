@@ -45,7 +45,7 @@ public class TodoController {
 
     //API
 
-    @GetMapping("/save-from-api")
+    @GetMapping("/load")
     public void saveTodosFromApi() {
         service.saveTodosFromApi();
     }

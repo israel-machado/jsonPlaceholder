@@ -21,4 +21,8 @@ public class PhotoDomain {
     private String title;
     private String url;
     private String thumbnailUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "albumId")
+    private AlbumDomain album;
 }

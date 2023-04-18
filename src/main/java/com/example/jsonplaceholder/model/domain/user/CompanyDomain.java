@@ -20,8 +20,4 @@ public class CompanyDomain {
     private String name;
     private String catchPhrase;
     private String bs;
-
-    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL)
-    private UserDomain user;
-
 }

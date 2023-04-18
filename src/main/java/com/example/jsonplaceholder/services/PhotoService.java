@@ -1,11 +1,11 @@
 package com.example.jsonplaceholder.services;
 
 import com.example.jsonplaceholder.client.JsonPlaceholderClient;
-import com.example.jsonplaceholder.converters.PhotoConverter;
-import com.example.jsonplaceholder.model.domain.AlbumDomain;
+import com.example.jsonplaceholder.mappers.PhotoConverter;
 import com.example.jsonplaceholder.model.domain.PhotoDomain;
 import com.example.jsonplaceholder.model.dto.request.PhotoRequest;
 import com.example.jsonplaceholder.model.dto.response.PhotoResponse;
+import com.example.jsonplaceholder.model.placeholder.PhotoPlaceholder;
 import com.example.jsonplaceholder.repository.AlbumRepository;
 import com.example.jsonplaceholder.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.jsonplaceholder.converters.PhotoConverter.*;
+import static com.example.jsonplaceholder.mappers.PhotoConverter.*;
 
 @Service
 public class PhotoService {
@@ -36,13 +36,13 @@ public class PhotoService {
     }
 
     public PhotoResponse insert(PhotoRequest photoRequest) {
-        PhotoDomain photo = convertToPhoto(photoRequest);
+        PhotoDomain photo = convertRequestToDomain(photoRequest);
         photo = repository.save(photo);
         return convertToPhotoResponse(photo);
     }
 
     public PhotoResponse update(Long id, PhotoRequest photoRequest) {
-        PhotoDomain photo = convertToPhoto(photoRequest);
+        PhotoDomain photo = convertRequestToDomain(photoRequest);
         photo.setId(id);
         PhotoDomain updatedPhoto = repository.save(photo);
         return convertToPhotoResponse(updatedPhoto);
@@ -55,15 +55,10 @@ public class PhotoService {
     //API
 
     public void savePhotosFromApi() {
-        List<PhotoDomain> photos = jsonPlaceholderClient.getPhotos();
-        for (PhotoDomain photo : photos) {
-            if (photo != null) {
-                AlbumDomain album = albumRepository.findById(photo.getAlbumId()).orElse(null);
-                if (album != null) {
-                    photo.setAlbumId(album.getId());
-                }
-                repository.save(photo);
-            }
+        List<PhotoPlaceholder> photosPlaceholder = jsonPlaceholderClient.getPhotos();
+        for (PhotoPlaceholder photo : photosPlaceholder) {
+            PhotoDomain photoDomain = convertPlaceholderToDomain(photo);
+            repository.save(photoDomain);
         }
     }
 }

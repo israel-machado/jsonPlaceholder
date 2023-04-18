@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.converters.sup;
+package com.example.jsonplaceholder.mappers.sup;
 
 
 import com.example.jsonplaceholder.model.dto.request.sup.GeoRequest;

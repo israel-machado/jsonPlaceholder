@@ -21,4 +21,8 @@ public class CommentDomain {
     private String name;
     private String email;
     private String body;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId")
+    private PostDomain post;
 }

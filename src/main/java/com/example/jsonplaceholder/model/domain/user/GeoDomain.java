@@ -19,9 +19,4 @@ public class GeoDomain {
     private Long id;
     private String lat;
     private String lng;
-
-    @OneToOne
-    @JoinColumn(name = "address_id")
-    private AddressDomain address;
-
 }

@@ -1,15 +1,18 @@
-package com.example.jsonplaceholder.converters;
+package com.example.jsonplaceholder.mappers;
 
 import com.example.jsonplaceholder.model.dto.request.TodoRequest;
 import com.example.jsonplaceholder.model.dto.response.TodoResponse;
 import com.example.jsonplaceholder.model.domain.TodoDomain;
+import com.example.jsonplaceholder.model.placeholder.TodoPlaceholder;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TodoConverter {
 
-    public static TodoDomain convertToTodo(TodoRequest todoRequest) {
+    // TodoDomain
+
+    public static TodoDomain convertRequestToDomain(TodoRequest todoRequest) {
         return TodoDomain.builder()
                 .id(todoRequest.getId())
                 .userId(todoRequest.getUserId())
@@ -17,6 +20,17 @@ public class TodoConverter {
                 .completed(todoRequest.getCompleted())
                 .build();
     }
+
+    public static TodoDomain convertPlaceholderToDomain(TodoPlaceholder todoPlaceholder) {
+        return TodoDomain.builder()
+                .id(todoPlaceholder.getId())
+                .userId(todoPlaceholder.getUserId())
+                .title(todoPlaceholder.getTitle())
+                .completed(todoPlaceholder.getCompleted())
+                .build();
+    }
+
+    // TodoResponse
 
     public static TodoResponse convertToTodoResponse(TodoDomain todo) {
         return TodoResponse.builder()
