@@ -27,25 +27,25 @@ public class PhotoService {
 
     public List<PhotoResponse> findAll() {
         List<PhotoDomain> photoList = repository.findAll();
-        return generatePhotoResponseList(photoList);
+        return generatePhotoDomainListToPhotoResponseList(photoList);
     }
 
     public PhotoResponse findById(Long id) {
         Optional<PhotoDomain> photo = repository.findById(id);
-        return photo.map(PhotoConverter::convertToPhotoResponse).orElse(null);
+        return photo.map(PhotoConverter::convertPhotoDomainToPhotoResponse).orElse(null);
     }
 
     public PhotoResponse insert(PhotoRequest photoRequest) {
-        PhotoDomain photo = convertRequestToDomain(photoRequest);
+        PhotoDomain photo = convertPhotoRequestToDomain(photoRequest);
         photo = repository.save(photo);
-        return convertToPhotoResponse(photo);
+        return convertPhotoDomainToPhotoResponse(photo);
     }
 
     public PhotoResponse update(Long id, PhotoRequest photoRequest) {
-        PhotoDomain photo = convertRequestToDomain(photoRequest);
+        PhotoDomain photo = convertPhotoRequestToDomain(photoRequest);
         photo.setId(id);
         PhotoDomain updatedPhoto = repository.save(photo);
-        return convertToPhotoResponse(updatedPhoto);
+        return convertPhotoDomainToPhotoResponse(updatedPhoto);
     }
 
     public void delete(Long id) {
@@ -57,7 +57,7 @@ public class PhotoService {
     public void savePhotosFromApi() {
         List<PhotoPlaceholder> photosPlaceholder = jsonPlaceholderClient.getPhotos();
         for (PhotoPlaceholder photo : photosPlaceholder) {
-            PhotoDomain photoDomain = convertPlaceholderToDomain(photo);
+            PhotoDomain photoDomain = convertPhotoPlaceholderToDomain(photo);
             repository.save(photoDomain);
         }
     }

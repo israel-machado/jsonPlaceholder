@@ -17,12 +17,11 @@ public class PhotoDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long albumId;
     private String title;
     private String url;
     private String thumbnailUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "albumId")
+    @ManyToOne
+    @JoinColumn(name = "album_id", nullable = false)
     private AlbumDomain album;
 }

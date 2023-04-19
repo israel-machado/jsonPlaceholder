@@ -18,8 +18,10 @@ public class TodoDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id")
-    private Long userId;
     private String title;
     private Boolean completed;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserDomain user;
 }

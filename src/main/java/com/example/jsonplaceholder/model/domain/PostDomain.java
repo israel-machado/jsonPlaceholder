@@ -20,10 +20,12 @@ public class PostDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id")
-    private Long userId;
     private String title;
     private String body;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserDomain user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.ALL)
     private List<CommentDomain> commentDomainList;

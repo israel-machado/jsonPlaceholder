@@ -7,6 +7,7 @@ import com.example.jsonplaceholder.model.placeholder.user.GeoPlaceholder;
 import com.example.jsonplaceholder.model.placeholder.user.UserPlaceholder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -39,4 +40,21 @@ public interface JsonPlaceholderClient {
 
     @GetMapping("/geos")
     List<GeoPlaceholder> getGeos();
+
+    // GetById
+
+    @GetMapping("/users/{userId}/albums")
+    List<AlbumPlaceholder> getAlbumsByUserId(@PathVariable("userId") Long userId);
+
+    @GetMapping("/users/{userId}/todos")
+    List<TodoPlaceholder> getTodosByUserId(@PathVariable("userId") Long userId);
+
+    @GetMapping("/users/{userId}/posts")
+    List<PostPlaceholder> getPostsByUserId(@PathVariable("userId") Long userId);
+
+    @GetMapping("/albums/{albumId}/photos")
+    List<PhotoPlaceholder> getPhotosByAlbumId(@PathVariable("albumId") Long albumId);
+
+    @GetMapping("/posts/{postId}/comments")
+    List<CommentPlaceholder> getCommentsByPostId(@PathVariable("postId") Long postId);
 }

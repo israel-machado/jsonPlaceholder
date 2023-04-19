@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class UserConverter {
 
     // User Converters
-    public static UserDomain convertRequestToDomain(UserRequest userRequest) {
+    public static UserDomain convertUserRequestToDomain(UserRequest userRequest) {
 
         return UserDomain.builder()
                 .id(userRequest.getId())
@@ -32,7 +32,7 @@ public class UserConverter {
                 .build();
     }
 
-    public static UserDomain convertPlaceholderToDomain(UserPlaceholder userPlaceholder) {
+    public static UserDomain convertUserPlaceholderToDomain(UserPlaceholder userPlaceholder) {
         return UserDomain.builder()
                 .id(userPlaceholder.getId())
                 .name(userPlaceholder.getName())
@@ -47,7 +47,7 @@ public class UserConverter {
 
     //UserResponse
 
-    public static UserResponse convertToUserResponse(UserDomain user) {
+    public static UserResponse convertUserDomainToUserResponse(UserDomain user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -60,9 +60,9 @@ public class UserConverter {
                 .build();
     }
 
-    public static List<UserResponse> generateUserResponseList(List<UserDomain> userList) {
+    public static List<UserResponse> generateUserDomainListToResponseList(List<UserDomain> userList) {
         return userList.stream()
-                .map(UserConverter::convertToUserResponse)
+                .map(UserConverter::convertUserDomainToUserResponse)
                 .collect(Collectors.toList());
     }
 

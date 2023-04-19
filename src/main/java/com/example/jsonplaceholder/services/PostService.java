@@ -27,25 +27,25 @@ public class PostService {
 
     public List<PostResponse> findAll() {
         List<PostDomain> postList = repository.findAll();
-        return generatePostResponseList(postList);
+        return generatePostDomainListToPostResponseList(postList);
     }
 
     public PostResponse findById(Long id) {
         Optional<PostDomain> post = repository.findById(id);
-        return post.map(PostConverter::convertToPostResponse).orElse(null);
+        return post.map(PostConverter::convertPostDomainToResponse).orElse(null);
     }
 
     public PostResponse insert(PostRequest postRequest) {
-        PostDomain post = convertRequestToDomain(postRequest);
+        PostDomain post = convertPostRequestToDomain(postRequest);
         post = repository.save(post);
-        return convertToPostResponse(post);
+        return convertPostDomainToResponse(post);
     }
 
     public PostResponse update(Long id, PostRequest postRequest) {
-        PostDomain post = convertRequestToDomain(postRequest);
+        PostDomain post = convertPostRequestToDomain(postRequest);
         post.setId(id);
         PostDomain updatedPost = repository.save(post);
-        return convertToPostResponse(updatedPost);
+        return convertPostDomainToResponse(updatedPost);
     }
 
     public void delete(Long id) {
@@ -57,7 +57,7 @@ public class PostService {
     public void savePostsFromApi() {
         List<PostPlaceholder> postsPlaceholder = jsonPlaceholderClient.getPosts();
         for (PostPlaceholder post : postsPlaceholder) {
-            PostDomain postDomain = convertPlaceholderToDomain(post);
+            PostDomain postDomain = convertPostPlaceholderToDomain(post);
             repository.save(postDomain);
         }
     }

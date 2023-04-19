@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class CommentResponse {
 
     private Long id;
-    private Long postId;
     private String name;
     private String email;
     private String body;

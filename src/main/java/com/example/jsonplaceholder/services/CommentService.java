@@ -27,25 +27,25 @@ public class CommentService {
 
     public List<CommentResponse> findAll() {
         List<CommentDomain> commentList = repository.findAll();
-        return generateCommentResponseList(commentList);
+        return generateCommentDomainListToCommentResponseList(commentList);
     }
 
     public CommentResponse findById(Long id) {
         Optional<CommentDomain> comment = repository.findById(id);
-        return comment.map(CommentConverter::convertToCommentResponse).orElse(null);
+        return comment.map(CommentConverter::convertCommentDomainToResponse).orElse(null);
     }
 
     public CommentResponse insert(CommentRequest commentRequest) {
-        CommentDomain comment = convertRequestToDomain(commentRequest);
+        CommentDomain comment = convertCommentRequestToDomain(commentRequest);
         comment = repository.save(comment);
-        return convertToCommentResponse(comment);
+        return convertCommentDomainToResponse(comment);
     }
 
     public CommentResponse update(Long id, CommentRequest commentRequest) {
-        CommentDomain comment = convertRequestToDomain(commentRequest);
+        CommentDomain comment = convertCommentRequestToDomain(commentRequest);
         comment.setId(id);
         CommentDomain updatedComment = repository.save(comment);
-        return convertToCommentResponse(updatedComment);
+        return convertCommentDomainToResponse(updatedComment);
     }
 
     public void delete(Long id) {
@@ -57,7 +57,7 @@ public class CommentService {
     public void saveCommentsFromApi() {
         List<CommentPlaceholder> commentsPlaceholder = jsonPlaceholderClient.getComments();
         for (CommentPlaceholder comment : commentsPlaceholder) {
-            CommentDomain commentDomain = convertPlaceholderToDomain(comment);
+            CommentDomain commentDomain = convertCommentPlaceholderToDomain(comment);
             repository.save(commentDomain);
         }
     }

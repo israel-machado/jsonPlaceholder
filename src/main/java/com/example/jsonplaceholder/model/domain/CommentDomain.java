@@ -17,12 +17,12 @@ public class CommentDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long postId;
     private String name;
     private String email;
+    @Column(length = 300)
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postId")
+    @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)
     private PostDomain post;
 }

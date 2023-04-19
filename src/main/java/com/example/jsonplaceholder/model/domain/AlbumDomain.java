@@ -14,14 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "album")
+@Table(name = "albums")
 public class AlbumDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
     private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserDomain user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "album", cascade = CascadeType.ALL)
     private List<PhotoDomain> photoDomainList;

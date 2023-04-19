@@ -27,25 +27,25 @@ public class TodoService {
 
     public List<TodoResponse> findAll() {
         List<TodoDomain> todoList = repository.findAll();
-        return generateTodoResponseList(todoList);
+        return generateTodoDomainListToTodoResponseList(todoList);
     }
 
     public TodoResponse findById(Long id) {
         Optional<TodoDomain> todo = repository.findById(id);
-        return todo.map(TodoConverter::convertToTodoResponse).orElse(null);
+        return todo.map(TodoConverter::convertTodoDomainToResponse).orElse(null);
     }
 
     public TodoResponse insert(TodoRequest todoRequest) {
-        TodoDomain todo = convertRequestToDomain(todoRequest);
+        TodoDomain todo = convertTodoRequestToDomain(todoRequest);
         todo = repository.save(todo);
-        return convertToTodoResponse(todo);
+        return convertTodoDomainToResponse(todo);
     }
 
     public TodoResponse update(Long id, TodoRequest todoRequest) {
-        TodoDomain todo = convertRequestToDomain(todoRequest);
+        TodoDomain todo = convertTodoRequestToDomain(todoRequest);
         todo.setId(id);
         TodoDomain updatedTodo = repository.save(todo);
-        return convertToTodoResponse(updatedTodo);
+        return convertTodoDomainToResponse(updatedTodo);
     }
 
     public void delete(Long id) {
@@ -55,7 +55,7 @@ public class TodoService {
     public void saveTodosFromApi() {
         List<TodoPlaceholder> todosPlaceholder = jsonPlaceholderClient.getTodos();
         for (TodoPlaceholder todo : todosPlaceholder) {
-            TodoDomain todoDomain = convertPlaceholderToDomain(todo);
+            TodoDomain todoDomain = convertTodoPlaceholderToDomain(todo);
             repository.save(todoDomain);
         }
     }

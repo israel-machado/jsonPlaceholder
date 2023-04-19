@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class TodoResponse {
 
     private Long id;
-    private Long userId;
     private String title;
     private Boolean completed;
 }

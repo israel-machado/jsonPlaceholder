@@ -28,25 +28,25 @@ public class AlbumService {
 
     public List<AlbumResponse> findAll() {
         List<AlbumDomain> albumList = repository.findAll();
-        return generateAlbumResponseList(albumList);
+        return generateAlbumDomainListToAlbumResponseList(albumList);
     }
 
     public AlbumResponse findById(Long id) {
         Optional<AlbumDomain> album = repository.findById(id);
-        return album.map(AlbumConverter::convertToAlbumResponse).orElse(null);
+        return album.map(AlbumConverter::convertAlbumDomainToResponse).orElse(null);
     }
 
     public AlbumResponse insert(AlbumRequest albumRequest) {
-        AlbumDomain album = convertRequestToDomain(albumRequest);
+        AlbumDomain album = convertAlbumRequestToDomain(albumRequest);
         album = repository.save(album);
-        return convertToAlbumResponse(album);
+        return convertAlbumDomainToResponse(album);
     }
 
     public AlbumResponse update(Long id, AlbumRequest albumRequest) {
-        AlbumDomain album = convertRequestToDomain(albumRequest);
+        AlbumDomain album = convertAlbumRequestToDomain(albumRequest);
         album.setId(id);
         AlbumDomain updatedAlbum = repository.save(album);
-        return convertToAlbumResponse(updatedAlbum);
+        return convertAlbumDomainToResponse(updatedAlbum);
     }
 
     public void delete(Long id) {
@@ -58,7 +58,7 @@ public class AlbumService {
     public void saveAlbumsFromApi() {
         List<AlbumPlaceholder> albumsPlaceholder = jsonPlaceholderClient.getAlbums();
         for (AlbumPlaceholder album : albumsPlaceholder) {
-            AlbumDomain albumDomain = convertPlaceholderToDomain(album);
+            AlbumDomain albumDomain = convertAlbumPlaceholderToDomain(album);
             repository.save(albumDomain);
         }
     }

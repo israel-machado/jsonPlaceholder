@@ -1,5 +1,6 @@
 package com.example.jsonplaceholder.mappers;
 
+import com.example.jsonplaceholder.model.domain.AlbumDomain;
 import com.example.jsonplaceholder.model.dto.request.PhotoRequest;
 import com.example.jsonplaceholder.model.dto.response.PhotoResponse;
 import com.example.jsonplaceholder.model.domain.PhotoDomain;
@@ -12,20 +13,18 @@ public class PhotoConverter {
 
     // Domain
 
-    public static PhotoDomain convertRequestToDomain(PhotoRequest photoRequest) {
+    public static PhotoDomain convertPhotoRequestToDomain(PhotoRequest photoRequest) {
         return PhotoDomain.builder()
                 .id(photoRequest.getId())
-                .albumId(photoRequest.getAlbumId())
                 .thumbnailUrl(photoRequest.getThumbnailUrl())
                 .url(photoRequest.getUrl())
                 .title(photoRequest.getTitle())
                 .build();
     }
 
-    public static PhotoDomain convertPlaceholderToDomain(PhotoPlaceholder photoPlaceholder) {
+    public static PhotoDomain convertPhotoPlaceholderToDomain(PhotoPlaceholder photoPlaceholder) {
         return PhotoDomain.builder()
                 .id(photoPlaceholder.getId())
-                .albumId(photoPlaceholder.getAlbumId())
                 .thumbnailUrl(photoPlaceholder.getThumbnailUrl())
                 .url(photoPlaceholder.getUrl())
                 .title(photoPlaceholder.getTitle())
@@ -34,19 +33,19 @@ public class PhotoConverter {
 
     // Response
 
-    public static PhotoResponse convertToPhotoResponse(PhotoDomain photo) {
+    public static PhotoResponse convertPhotoDomainToPhotoResponse(PhotoDomain photo) {
+
         return PhotoResponse.builder()
                 .id(photo.getId())
-                .albumId(photo.getAlbumId())
                 .thumbnailUrl(photo.getThumbnailUrl())
                 .url(photo.getUrl())
                 .title(photo.getTitle())
                 .build();
     }
 
-    public static List<PhotoResponse> generatePhotoResponseList(List<PhotoDomain> photoList) {
+    public static List<PhotoResponse> generatePhotoDomainListToPhotoResponseList(List<PhotoDomain> photoList) {
         return photoList.stream()
-                .map(PhotoConverter::convertToPhotoResponse)
+                .map(PhotoConverter::convertPhotoDomainToPhotoResponse)
                 .collect(Collectors.toList());
     }
 }

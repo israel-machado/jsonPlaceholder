@@ -44,11 +44,4 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
-
-    //API
-
-    @GetMapping("/load")
-    public void saveUsersFromApi() {
-        userService.saveUsersFromApi();
-    }
 }

@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class PhotoResponse {
 
     private Long id;
-    private Long albumId;
     private String title;
     private String url;
     private String thumbnailUrl;

@@ -1,9 +1,11 @@
 package com.example.jsonplaceholder.mappers;
 
+import com.example.jsonplaceholder.model.domain.user.UserDomain;
 import com.example.jsonplaceholder.model.dto.request.PostRequest;
 import com.example.jsonplaceholder.model.dto.response.PostResponse;
 import com.example.jsonplaceholder.model.domain.PostDomain;
 import com.example.jsonplaceholder.model.placeholder.PostPlaceholder;
+import org.apache.catalina.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,19 +14,17 @@ public class PostConverter {
 
     //Domain
 
-    public static PostDomain convertRequestToDomain(PostRequest postRequest) {
+    public static PostDomain convertPostRequestToDomain(PostRequest postRequest) {
         return PostDomain.builder()
                 .id(postRequest.getId())
-                .userId(postRequest.getUserId())
                 .body(postRequest.getBody())
                 .title(postRequest.getTitle())
                 .build();
     }
 
-    public static PostDomain convertPlaceholderToDomain(PostPlaceholder postPlaceholder) {
+    public static PostDomain convertPostPlaceholderToDomain(PostPlaceholder postPlaceholder) {
         return PostDomain.builder()
                 .id(postPlaceholder.getId())
-                .userId(postPlaceholder.getUserId())
                 .body(postPlaceholder.getBody())
                 .title(postPlaceholder.getTitle())
                 .build();
@@ -32,19 +32,18 @@ public class PostConverter {
 
     // Response
 
-    public static PostResponse convertToPostResponse(PostDomain post) {
+    public static PostResponse convertPostDomainToResponse(PostDomain post) {
         return PostResponse.builder()
                 .id(post.getId())
-                .userId(post.getUserId())
                 .body(post.getBody())
                 .title(post.getTitle())
                 .build();
 
     }
 
-    public static List<PostResponse> generatePostResponseList(List<PostDomain> postList) {
+    public static List<PostResponse> generatePostDomainListToPostResponseList(List<PostDomain> postList) {
         return postList.stream()
-                .map(PostConverter::convertToPostResponse)
+                .map(PostConverter::convertPostDomainToResponse)
                 .collect(Collectors.toList());
     }
 }

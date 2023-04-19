@@ -1,6 +1,7 @@
 package com.example.jsonplaceholder.model.domain.user;
 
 import com.example.jsonplaceholder.model.domain.*;
+import com.example.jsonplaceholder.model.placeholder.user.UserPlaceholder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
